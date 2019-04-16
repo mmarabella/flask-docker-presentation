@@ -21,31 +21,31 @@ app.secret_key = 'password123'
 
 db = SQLAlchemy(app)
 
-class students(db.Model):
+class Student(db.Model):
     id = db.Column('student_id', db.Integer, primary_key=True)
     name = db.Column(db.String(100))
-    city = db.Column(db.String(50))
-    addr = db.Column(db.String(200))
+    eid = db.Column(db.String(50))
+    major = db.Column(db.String(200))
 
-    def __init__(self, name, city, addr):
+    def __init__(self, name, eid, major):
         self.name = name
-        self.city = city
-        self.addr = addr
+        self.eid = eid
+        self.major = major
 
 def database_initialization_sequence():
     db.create_all()
-    test_rec = students(
-            'John Doe',
-            'Los Angeles',
-            '123 Foobar Ave')
+    student1 = Student(
+            'Madalyn',
+            'mm123',
+            'MIS')
 
-    db.session.add(test_rec)
+    db.session.add(student1)
 #    db.session.rollback()
     db.session.commit()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    return (students.query.first().name)
+    return (Student.query.first().name)
 
 if __name__ == '__main__':
     dbstatus = False
