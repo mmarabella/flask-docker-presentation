@@ -1,14 +1,12 @@
 import time
-from flask import Flask, render_template, flash, redirect, request, url_for
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
-
 
 DBUSER = 'postgres'
 DBPASS = 'password123'
 DBHOST = 'db'
 DBPORT = '5432'
 DBNAME = 'testdb'
-
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = \
@@ -21,9 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'password123'
 
-
 db = SQLAlchemy(app)
-
 
 class students(db.Model):
     id = db.Column('student_id', db.Integer, primary_key=True)
@@ -36,7 +32,6 @@ class students(db.Model):
         self.city = city
         self.addr = addr
 
-
 def database_initialization_sequence():
     db.create_all()
     test_rec = students(
@@ -48,26 +43,9 @@ def database_initialization_sequence():
 #    db.session.rollback()
     db.session.commit()
 
-
 @app.route('/', methods=['GET', 'POST'])
 def home():
-    '''
-    if request.method == 'POST':
-        if not request.form['name'] or not request.form['city'] or not request.form['addr']:
-            flash('Please enter all the fields', 'error')
-        else:
-            student = students(
-                    request.form['name'],
-                    request.form['city'],
-                    request.form['addr'])
-
-            db.session.add(student)
-            db.session.commit()
-            flash('Record was succesfully added')
-            return redirect(url_for('home'))
-    '''
-    return (students.query.all()[0].name)
-
+    return (students.query.first().name)
 
 if __name__ == '__main__':
     dbstatus = False
