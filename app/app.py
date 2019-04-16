@@ -22,26 +22,22 @@ app.secret_key = 'password123'
 db = SQLAlchemy(app)
 
 class Student(db.Model):
-    id = db.Column('student_id', db.Integer, primary_key=True)
-    name = db.Column(db.String(100))
-    eid = db.Column(db.String(50))
-    major = db.Column(db.String(200))
+  id = db.Column('student_id', db.Integer, primary_key=True)
+  name = db.Column(db.String(50))
+  eid = db.Column(db.String(50))
+  major = db.Column(db.String(50))
 
-    def __init__(self, name, eid, major):
-        self.name = name
-        self.eid = eid
-        self.major = major
+  def __init__(self, name, eid, major):
+    self.name = name
+    self.eid = eid
+    self.major = major
 
-def database_initialization_sequence():
-    db.create_all()
-    student1 = Student(
-            'Madalyn',
-            'mm123',
-            'MIS')
-
-    db.session.add(student1)
-#    db.session.rollback()
-    db.session.commit()
+def insert_students():
+  db.create_all()
+  student1 = Student('Madalyn', 'mm123', 'MIS')
+  db.session.add(student1)
+  # db.session.rollback()
+  db.session.commit()
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -56,5 +52,5 @@ if __name__ == '__main__':
             time.sleep(2)
         else:
             dbstatus = True
-    database_initialization_sequence()
+    insert_students()
     app.run(debug=True, host='0.0.0.0')
