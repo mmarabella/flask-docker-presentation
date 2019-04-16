@@ -1,2 +1,2 @@
 docker rm $(docker ps -a -q)
-docker rmi flaskdockerapp_app
+docker rmi flaskdockerapp_web

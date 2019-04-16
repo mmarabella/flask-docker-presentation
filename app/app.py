@@ -3,8 +3,8 @@ from flask import Flask, render_template, flash, redirect, request, url_for
 from flask_sqlalchemy import SQLAlchemy
 
 
-DBUSER = 'marco'
-DBPASS = 'foobarbaz'
+DBUSER = 'postgres'
+DBPASS = 'password123'
 DBHOST = 'db'
 DBPORT = '5432'
 DBNAME = 'testdb'
@@ -19,7 +19,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = \
         port=DBPORT,
         db=DBNAME)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = 'foobarbaz'
+app.secret_key = 'password123'
 
 
 db = SQLAlchemy(app)
