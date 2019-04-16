@@ -1,9 +1,5 @@
-# Basic flask container
+# Basic ubuntu container
 
-# FROM fanoftal2/flask-crud-base:1
-
-# ADD ./app /home/app/
-# WORKDIR /home/app/
 FROM ubuntu:latest
 RUN apt-get update -y
 RUN apt-get install -y python-pip python-dev build-essential
@@ -13,5 +9,3 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 ENTRYPOINT ["python"]
 CMD ["app.py"]
-
-#ENTRYPOINT ["python3", "app.py"]
