@@ -35,18 +35,22 @@ class Student(db.Model):
 def insert_students():
   db.create_all()
   student1 = Student('Madalyn', 'mm123', 'MIS')
+  student2 = Student('Shaana', 'it000', 'Economics')
   db.session.add(student1)
+  db.session.add(student2)
   # db.session.rollback()
   db.session.commit()
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
 def home():
-    return (Student.query.first().name)
+  students = db.session.query(Student).all()
+  return render_template('Students.html', students = students)
 
 if __name__ == '__main__':
     dbstatus = False
     while dbstatus == False:
         try:
+            db.drop_all()
             db.create_all()
         except:
             time.sleep(2)
